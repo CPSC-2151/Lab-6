@@ -1,6 +1,7 @@
 package cpsc2150.banking.models;
-
+// we have to make a contract with invarriants and correspondants
 public class Mortgage extends AbsMortgage implements IMortgage{
+    private 
 
     @Override
     public boolean loanApproved() {
