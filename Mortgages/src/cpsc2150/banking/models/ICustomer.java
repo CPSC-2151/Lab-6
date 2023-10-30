@@ -4,7 +4,7 @@ package cpsc2150.banking.models;
  * Holds information about their customer and allows them to apply for a loan. The actual work for the loan is handled by IMortgage
  *
  * Defines: CreditScore: Z
- *          MonthlyDebt: R - How much they pay per moth towards other forms of debt (car payments, student loans, etc)
+ *          MonthlyDebt: R - How much they pay per month towards other forms of debt (car payments, student loans, etc)
  *          Loan: The customer's mortgage they are applying for
  *          Income: R - Yearly income
  *          Name: Customer must have a name
