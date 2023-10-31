@@ -30,49 +30,11 @@ public class Mortgage extends AbsMortgage implements IMortgage{
      * @post
      */
     public Mortgage (double homeCost, double downPayment, int numYears, ICustomer customer) {
-        this.Customer = customer;
-        this.NumberOfPayments = numYears;
-        // If the loan is for less than 30 years, add 0.5%; otherwise, add 1%
-        if (numYears < MAX_YEARS) {
-            Rate = BASERATE + 0.005;
-        }
-        else {
-            Rate = BASERATE + 0.01;
-        }
-
-        // If the percent down is not at least 20%, add 0.5% to the APR
-        PercentDown = downPayment/homeCost;
-        if (PercentDown < PREFERRED_PERCENT_DOWN) {
-            Rate += 0.005;
-        }
-
-        // Adding based on credit score
-        double creditScore = customer.getCreditScore();
-        if (creditScore < BADCREDIT) {
-            Rate += VERYBADRATEADD;
-        }
-        else if (creditScore >= BADCREDIT && creditScore < FAIRCREDIT) {
-            Rate += BADRATEADD;
-        }
-        else if (creditScore >= FAIRCREDIT && creditScore < GOODCREDIT) {
-            Rate += NORMALRATEADD;
-        }
-        else if (creditScore >= GOODCREDIT && creditScore < GREATCREDIT) {
-            Rate += GOODRATEADD;
-        }
-        else if (creditScore >= GREATCREDIT) {
-            Rate += 0;
-        }
-
-        // Our Principal amount for the loan is the cost of the house minus the down payment
-        Principal = homeCost - downPayment;
-
-        // monthly payments for the loan
-        Payment = (Rate * Principal) / Math.pow((1-(1+Rate)), -NumberOfPayments);
-
-        // Debt to income ratio is the debt payments (over a period of time) divided by the income
-        //(over the same period of time)
-        DebtToIncomeRatio = (customer.getMonthlyDebtPayments() + Payment)/(customer.getIncome() / MONTHS_IN_YEAR);
+        this.Principal = homeCost - downPayment;
+        this.PercentDown = downPayment / homeCost;
+        this.NumberOfPayments = numYears * MONTHS_IN_YEAR;
+        this.Customer = customer; 
+        
 
 
     }
