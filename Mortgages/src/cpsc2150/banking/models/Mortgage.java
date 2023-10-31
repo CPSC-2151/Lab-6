@@ -1,4 +1,5 @@
 package cpsc2150.banking.models;
+import java.lang.Math;
 
 /** Mortgage Contract
  *
@@ -20,10 +21,11 @@ public class Mortgage extends AbsMortgage implements IMortgage{
     private double PercentDown;
     /**
      *
-     * @param homeCost
-     * @param downPayment
-     * @param numYears
-     * @param customer
+     * @param homeCost the cost of the home
+     * @param downPayment the down payment for the home
+     * @param numYears the number of years for the loan
+     * @param customer the customer applying for the mortgage
+     *
      * @pre
      * @post
      */
@@ -66,7 +68,7 @@ public class Mortgage extends AbsMortgage implements IMortgage{
         Principal = homeCost - downPayment;
 
         // monthly payments for the loan
-        Payment = (Rate * Principal) / (1-(1+Rate)^ -NumberOfPayments);
+        Payment = (Rate * Principal) / Math.pow((1-(1+Rate)), -NumberOfPayments);
 
         // Debt to income ratio is the debt payments (over a period of time) divided by the income
         //(over the same period of time)
@@ -77,22 +79,24 @@ public class Mortgage extends AbsMortgage implements IMortgage{
 
     @Override
     public boolean loanApproved() {
-        return false;
+
+        return Rate * 12 < RATETOOHIGH && PercentDown >= MIN_PERCENT_DOWN && DebtToIncomeRatio <= DTOITOOHIGH;
+
     }
 
     @Override
     public double getPayment() {
-        return 0;
+        return Payment;
     }
 
     @Override
     public double getRate() {
-        return 0;
+        return Rate*12;
     }
 
     @Override
     public double getPrincipal() {
-        return 0;
+        return Principal;
     }
 
     @Override
