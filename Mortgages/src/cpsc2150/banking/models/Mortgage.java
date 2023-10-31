@@ -1,5 +1,15 @@
 package cpsc2150.banking.models;
-// we have to make a contract with invarriants and correspondants
+
+/** Mortgage Contract
+ *
+ * @invariant Payment > 0 AND 0 <= Rate <= 1 AND Customer AND DebtToIncomeRatio > 0 AND Principal > 0 AND
+ *            0 <= PercentDown < 1
+ *
+ * @correspondence self.Payment = payment AND self.Rate = rate AND self.Customer = customer AND
+ *                 self.DebtToIncomeRatio = debttoincomeratio AND self.Principal = principal AND
+ *                 self.NumberOfPayments = numberofpayments AND self.PercentDown = percentdown
+ *
+ */
 public class Mortgage extends AbsMortgage implements IMortgage{
     private double Payment;
     private double Rate;
