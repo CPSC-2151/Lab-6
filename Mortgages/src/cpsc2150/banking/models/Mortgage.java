@@ -8,7 +8,7 @@ import java.lang.Math;
  *
  * @correspondence self.Payment = payment AND self.Rate = rate AND self.Customer = customer AND
  *                 self.DebtToIncomeRatio = DebtToIncomeRatio AND self.Principal = Principal AND
- *                 self.LoanDurationInYears = LoanDurationInYears AND self.PercentDown = PercentDown
+ *                 self.NumberOfPayments = NumberOfPayments AND self.PercentDown = PercentDown
  *
  */
 public class Mortgage extends AbsMortgage implements IMortgage{
@@ -17,7 +17,7 @@ public class Mortgage extends AbsMortgage implements IMortgage{
     private ICustomer Customer;
     private double DebtToIncomeRatio;
     private double Principal;
-    private int LoanDurationInYears;
+    private int NumberOfPayments;
     private double PercentDown;
     /**
      *
@@ -31,7 +31,7 @@ public class Mortgage extends AbsMortgage implements IMortgage{
      */
     public Mortgage (double homeCost, double downPayment, int numYears, ICustomer customer) {
         this.Customer = customer;
-        this.LoanDurationInYears = numYears;
+        this.NumberOfPayments = numYears;
         // If the loan is for less than 30 years, add 0.5%; otherwise, add 1%
         if (numYears < MAX_YEARS) {
             Rate = BASERATE + 0.005;
@@ -68,7 +68,7 @@ public class Mortgage extends AbsMortgage implements IMortgage{
         Principal = homeCost - downPayment;
 
         // monthly payments for the loan
-        Payment = (Rate * Principal) / Math.pow((1-(1+Rate)), -LoanDurationInYears);
+        Payment = (Rate * Principal) / Math.pow((1-(1+Rate)), -NumberOfPayments);
 
         // Debt to income ratio is the debt payments (over a period of time) divided by the income
         //(over the same period of time)
@@ -101,6 +101,6 @@ public class Mortgage extends AbsMortgage implements IMortgage{
 
     @Override
     public int getYears() {
-        return LoanDurationInYears;
+        return NumberOfPayments;
     }
 }
