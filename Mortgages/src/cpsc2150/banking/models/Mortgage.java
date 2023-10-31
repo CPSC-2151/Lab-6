@@ -26,7 +26,8 @@ public class Mortgage extends AbsMortgage implements IMortgage{
      * @param numYears the number of years for the loan
      * @param customer the customer applying for the mortgage
      *
-     * @pre homeCost > 0 AND downPayment > 0 AND downPayment <= homeCost AND numYears > 0 AND customer != null
+     * @pre homeCost > 0 AND downPayment > 0 AND downPayment <= homeCost AND numYears > 0 AND customer != null AND downPayment < homeCost
+     * AND numYears >= MIN_YEARS AND numYears <= MAX_YEARS
      * @post
      */
     public Mortgage (double homeCost, double downPayment, int numYears, ICustomer customer) {
@@ -34,15 +35,38 @@ public class Mortgage extends AbsMortgage implements IMortgage{
         this.PercentDown = downPayment / homeCost;
         this.NumberOfPayments = numYears * MONTHS_IN_YEAR;
         this.Customer = customer; 
+
+        //calculate Rate
+        this.rate = BASERATE;
+
+        // down payment adjustment
+        if(PercentDown < PREFERRED_PERCENT_DOWN){
+            rate += GOODRATEADD:
+        }
         
+        //adjust for credit score
+        if(customer.getCreditScore() < BADCREDIT){
+            rate += VERYBADRATEADD; 
+        }else if(customer.getCreditScore() < FAIRCREDIT){
+            rate += BADRATEADD;
+        }else if(customer.getCreditScore() < GOODCREDIT){
+            rate += NORMALRATEADD;
+        }else if(customer.getCreditScore() < GREATCREDIT){
+            rate += GOODRATEADD;
+        }
 
-
+        // adjust for the duration of the loan
+        if(numYears < MAX_YEARS){
+            rate += NORMALRATEADD;
+        }else{
+            rate += BADRATEADD;
+        }   
     }
 
     @Override
     public boolean loanApproved() {
 
-        return Rate * 12 < RATETOOHIGH && PercentDown >= MIN_PERCENT_DOWN && DebtToIncomeRatio <= DTOITOOHIGH;
+        return Rate * MONTHS_IN_YEAR < RATETOOHIGH && PercentDown >= MIN_PERCENT_DOWN && DebtToIncomeRatio <= DTOITOOHIGH;
 
     }
 
@@ -53,7 +77,7 @@ public class Mortgage extends AbsMortgage implements IMortgage{
 
     @Override
     public double getRate() {
-        return Rate*12;
+        return Rate * MONTHS_IN_YEAR;
     }
 
     @Override
@@ -63,6 +87,6 @@ public class Mortgage extends AbsMortgage implements IMortgage{
 
     @Override
     public int getYears() {
-        return NumberOfPayments;
+        return NumberOfPayments / MONTHS_IN_YEAR;
     }
 }
