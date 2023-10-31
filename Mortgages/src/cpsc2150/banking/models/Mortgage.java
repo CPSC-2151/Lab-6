@@ -1,7 +1,7 @@
 package cpsc2150.banking.models;
 import java.lang.Math;
 
-/** Mortgage Contract
+/** The Mortgage class models a mortgage contract, determining its terms based on the home cost, down payment, loan duration, and a customer's financial profile.
  *
  * @invariant Payment > 0 AND 0 <= Rate <= 1 AND Customer AND DebtToIncomeRatio > 0 AND Principal > 0 AND
  *            0 <= PercentDown < 1
@@ -101,6 +101,6 @@ public class Mortgage extends AbsMortgage implements IMortgage{
 
     @Override
     public int getYears() {
-        return 0;
+        return ;
     }
 }
