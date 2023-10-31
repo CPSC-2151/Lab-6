@@ -7,8 +7,8 @@ import java.lang.Math;
  *            0 <= PercentDown < 1
  *
  * @correspondence self.Payment = payment AND self.Rate = rate AND self.Customer = customer AND
- *                 self.DebtToIncomeRatio = debttoincomeratio AND self.Principal = principal AND
- *                 self.NumberOfPayments = numberofpayments AND self.PercentDown = percentdown
+ *                 self.DebtToIncomeRatio = DebtToIncomeRatio AND self.Principal = Principal AND
+ *                 self.LoanDurationInYears = LoanDurationInYears AND self.PercentDown = PercentDown
  *
  */
 public class Mortgage extends AbsMortgage implements IMortgage{
@@ -26,7 +26,7 @@ public class Mortgage extends AbsMortgage implements IMortgage{
      * @param numYears the number of years for the loan
      * @param customer the customer applying for the mortgage
      *
-     * @pre
+     * @pre homeCost > 0 AND downPayment > 0 AND downPayment <= homeCost AND numYears > 0 AND customer != null
      * @post
      */
     public Mortgage (double homeCost, double downPayment, int numYears, ICustomer customer) {
@@ -68,7 +68,7 @@ public class Mortgage extends AbsMortgage implements IMortgage{
         Principal = homeCost - downPayment;
 
         // monthly payments for the loan
-        Payment = (Rate * Principal) / Math.pow((1-(1+Rate)), -NumberOfPayments);
+        Payment = (Rate * Principal) / Math.pow((1-(1+Rate)), -LoanDurationInYears);
 
         // Debt to income ratio is the debt payments (over a period of time) divided by the income
         //(over the same period of time)
