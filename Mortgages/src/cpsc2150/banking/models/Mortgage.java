@@ -28,7 +28,9 @@ public class Mortgage extends AbsMortgage implements IMortgage{
      *
      * @pre homeCost > 0 AND downPayment > 0 AND downPayment <= homeCost AND numYears > 0 AND customer != null AND downPayment < homeCost
      * AND numYears >= MIN_YEARS AND numYears <= MAX_YEARS
-     * @post
+     * @post [Rate is calculated based on the customer's credit score, duration of the loan, and the percent down] AND this.Principal = homeCost - downPayment
+     * AND this.PercentDown = downPayment / homeCost AND this.NumberOfPayments = numYears * MONTHS_IN_YEAR AND this.Customer = customer 
+     * AND [Rate is initially set to BASERATE then adjustments are added based on customer credit score] AND this.Customer = customer
      */
     public Mortgage (double homeCost, double downPayment, int numYears, ICustomer customer) {
         this.Principal = homeCost - downPayment;
