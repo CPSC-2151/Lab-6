@@ -17,7 +17,7 @@ public class Mortgage extends AbsMortgage implements IMortgage{
     private ICustomer Customer;
     private double DebtToIncomeRatio;
     private double Principal;
-    private int NumberOfPayments;
+    private int LoanDurationInYears;
     private double PercentDown;
     /**
      *
@@ -30,8 +30,8 @@ public class Mortgage extends AbsMortgage implements IMortgage{
      * @post
      */
     public Mortgage (double homeCost, double downPayment, int numYears, ICustomer customer) {
-        Customer = customer;
-
+        this.Customer = customer;
+        this.LoanDurationInYears = numYears;
         // If the loan is for less than 30 years, add 0.5%; otherwise, add 1%
         if (numYears < MAX_YEARS) {
             Rate = BASERATE + 0.005;
@@ -101,6 +101,6 @@ public class Mortgage extends AbsMortgage implements IMortgage{
 
     @Override
     public int getYears() {
-        return ;
+        return LoanDurationInYears;
     }
 }
